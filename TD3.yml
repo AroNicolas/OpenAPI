@@ -1,0 +1,118 @@
+openapi: 3.0.3
+info:
+  title: STD23111 - TD2
+  version: 1.0.3
+servers:
+  - url: http://localhost:3000
+paths:
+  /meal:
+    get:
+      summary: Récupérer la liste de tous les plats
+      responses:
+        '200':
+          description: Liste de plats récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Meal'
+    post:
+      summary: Créer un nouveau plat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MealCreation'
+      responses:
+        '201':
+          description: Plat créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+  /meal/{id}:
+    put:
+      summary: Mettre à jour un plat par identifiant
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique du plat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MealUpdate'
+      responses:
+        '200':
+          description: Plat mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+        '404':
+          description: Plat non trouvé
+    delete:
+      summary: Supprimer un plat par identifiant
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique du plat
+      responses:
+        '204':
+          description: Plat supprimé avec succès
+        '404':
+          description: Plat non trouvé
+components:
+  schemas:
+    Meal:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifiant unique du plat
+        name:
+          type: string
+          description: Nom du plat
+        price:
+          type: number
+          format: float
+          description: Prix du plat
+      required:
+        - id
+        - name
+        - price
+    MealCreation:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nom du plat
+        price:
+          type: number
+          format: float
+          description: Prix du plat
+      required:
+        - name
+        - price
+    MealUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nom du plat
+        price:
+          type: number
+          format: float
+          description: Prix du plat
+      required:
+        - name
+        - price

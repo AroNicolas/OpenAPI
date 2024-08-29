@@ -1,0 +1,263 @@
+openapi: 3.0.3
+info:
+  title: STD23111 - TD2
+  version: 1.0.5
+servers:
+  - url: http://localhost:3000
+paths:
+  /meal:
+    get:
+      summary: Récupérer la liste de tous les plats
+      responses:
+        '200':
+          description: Liste de plats récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Meal'
+    post:
+      summary: Créer un nouveau plat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MealCreation'
+      responses:
+        '201':
+          description: Plat créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+  /meal/{id}:
+    put:
+      summary: Mettre à jour complètement un plat par identifiant
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique du plat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MealUpdate'
+      responses:
+        '200':
+          description: Plat mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+        '404':
+          description: Plat non trouvé
+    patch:
+      summary: Mettre à jour partiellement un plat par identifiant
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique du plat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MealPartialUpdate'
+      responses:
+        '200':
+          description: Plat mis à jour partiellement avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+        '404':
+          description: Plat non trouvé
+  /customers:
+    get:
+      summary: Récupérer la liste de tous les clients
+      responses:
+        '200':
+          description: Liste de clients récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+    post:
+      summary: Créer un nouveau client
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreation'
+      responses:
+        '201':
+          description: Client créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /customers/{id}:
+    put:
+      summary: Mettre à jour complètement un client par identifiant
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique du client
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdate'
+      responses:
+        '200':
+          description: Client mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          description: Client non trouvé
+    patch:
+      summary: Mettre à jour partiellement un client par identifiant
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Identifiant unique du client
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerPartialUpdate'
+      responses:
+        '200':
+          description: Client mis à jour partiellement avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          description: Client non trouvé
+components:
+  schemas:
+    Meal:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifiant unique du plat
+        name:
+          type: string
+          description: Nom du plat
+        price:
+          type: number
+          format: float
+          description: Prix du plat
+      required:
+        - id
+        - name
+        - price
+    MealCreation:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nom du plat
+        price:
+          type: number
+          format: float
+          description: Prix du plat
+      required:
+        - name
+        - price
+    MealUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nom du plat
+        price:
+          type: number
+          format: float
+          description: Prix du plat
+      required:
+        - name
+        - price
+    MealPartialUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nom du plat
+        price:
+          type: number
+          format: float
+          description: Prix du plat
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifiant unique du client
+        name:
+          type: string
+          description: Nom du client
+        age:
+          type: integer
+          description: Âge du client
+      required:
+        - id
+        - name
+        - age
+    CustomerCreation:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nom du client
+        age:
+          type: integer
+          description: Âge du client
+      required:
+        - name
+        - age
+    CustomerUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nom du client
+        age:
+          type: integer
+          description: Âge du client
+      required:
+        - name
+        - age
+    CustomerPartialUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nom du client
+        age:
+          type: integer
+          description: Âge du client
